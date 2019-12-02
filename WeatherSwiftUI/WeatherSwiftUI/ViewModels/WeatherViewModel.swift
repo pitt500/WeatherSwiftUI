@@ -43,7 +43,14 @@ class WeatherViewModel: ObservableObject {
   
   private func fetchWeather(by city: String) {
     self.service.getWeather(city: city) { weather in
-      self.weather = weather
+      
+      DispatchQueue.main.async {
+        self.weather = weather
+        
+        if weather == nil {
+          self.cityName = "Error"
+        }
+      }
     }
   }
 }
